@@ -2,10 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
-.rds
+Plots
 data/AIS_USA_troll
 data/ALB_logbook
-data/ALB_tag
 data/oisst
 data/static
 .lintr
