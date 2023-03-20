@@ -185,16 +185,16 @@ species1 <- readRDS("species1.rds")#Porpoise2005
 species2 <- readRDS("species2.rds")#Herring (age 1)
 species3 <- readRDS("species3.rds")#Herring (ages 2&3)
 
-n1<-dim(species1)[1]
+n1<-dim(species1)[1] #getting the number of rows
 n2<-dim(species2)[1]
 n3<-dim(species3)[1]
 
-nothing1 = rep(NA, n1)
+nothing1 = rep(NA, n1) # vector of NAs with the number of rows
 nothing2 = rep(NA, n2)
 nothing3 = rep(NA, n3)
 
 #Generating 3 vectors of response variables for the joint model 
-y = as.vector(species1$density)
+y = as.vector(species1$density) 
 yNA = as.vector(c(y, nothing2, nothing3))
 
 z = as.vector(species2$density)
@@ -209,7 +209,7 @@ outcome.matrix<-matrix(c(yNA,zNA, wNA), ncol=3)
 #A factor vector with 3 levels indicating 3 outcome variables
 mu = as.factor(c(rep(1,length(y)), rep(2,length(z)), rep(3,length(w))))
 
-#Index vectors for the spatial effects 
+#Index vectors for the spatial effects ----- this differs with mine because I have point reference data (but I could aggregate it)
 i.spat1 = c(species1$IDgrid, nothing2, nothing3)
 i.spat2 = c(nothing1, species2$IDgrid, nothing3)
 i.spat3 = c(nothing1, nothing2, species3$IDgrid)
@@ -225,11 +225,12 @@ CHL3 <-c(nothing1, nothing2, species3$CHL)
 NPP3<-c(nothing1, nothing2, species3$NPP)
 DVV3 <-c(nothing1, nothing2, species3$DVV)
 
-#Data set
+#Data set - a list of the responses (outcome matrix), index on the grid, and covariates for each species
 data=list(outcome.matrix=outcome.matrix, i.spat1=i.spat1, i.spat2=i.spat2, i.spat3=i.spat3,
           BT1=BT1, NPP2=NPP2, SP2=SP2, DVV2=DVV2, CHL3=CHL3, NPP3=NPP3, DVV3=DVV3
 )
 
+#not sure what param.cc01 is or param.spat01 --- some sort of prior I think 
 formula = outcome.matrix ~ mu -1 +
   f(inla.group(BT1), model="rw2", hyper=param.cc01) +
   f(inla.group(NPP2), model="rw2", hyper=param.cc01) +

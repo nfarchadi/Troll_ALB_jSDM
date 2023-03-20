@@ -2,10 +2,10 @@ $Version
 [1] "VAST_v14_0_1"
 
 $n_x
-[1] 150
+[1] 100
 
 $Region
-[1] "USER"
+[1] "gulf_of_alaska"
 
 $strata.limits
      STRATA
@@ -15,8 +15,8 @@ $zone
 [1] NA
 
 $FieldConfig
-  Omega1 Epsilon1   Omega2 Epsilon2 
-       1        1        0        0 
+  Omega1   Omega2 Epsilon1 Epsilon2 
+       0        0        0        0 
 
 $RhoConfig
    Beta1    Beta2 Epsilon1 Epsilon2 
@@ -37,8 +37,8 @@ $vars_to_correct
 [1] "Index_cyl" "Index_ctl"
 
 $Options
-Calculate_Range 
-           TRUE 
+           Calculate_Range   Calculate_effective_area treat_nonencounter_as_zero 
+                      TRUE                       TRUE                       TRUE 
 
 $grid_size_km
 [1] 25
@@ -53,7 +53,7 @@ $Method
 [1] "Mesh"
 
 $use_anisotropy
-[1] TRUE
+[1] FALSE
 
 $fine_scale
 [1] TRUE

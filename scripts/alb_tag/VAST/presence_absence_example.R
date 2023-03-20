@@ -4,7 +4,10 @@
 #####
 library(VAST)
 library(splines)
+library(tidyverse)
 example<- load_example( data_set="covariate_example" )
+example$sampling_data %>% view()
+example$covariate_data %>% view()
 
 # Make settings (turning off bias.correct to save time for example)
 settings <- make_settings(
@@ -33,6 +36,7 @@ example$covariate_data[,'Year']<- NA
 example$covariate_data[,'BOT_DEPTH'] <- example$covariate_data[,'BOT_DEPTH'] / 100
 
 # Run model
+?fit_model()
 fit_vast<- fit_model( "settings" = settings,
   Lat_i = example$sampling_data[,'Lat'],
   Lon_i = example$sampling_data[,'Lon'],
@@ -52,6 +56,7 @@ library(sdmTMB)
 
 data_sdmtmb <- data.frame("Year" = example$sampling_data[, "Year"], "Lat" = example$sampling_data[, "Lat"], "Lon" = example$sampling_data[, "Lon"], "Catch_KG" = example$sampling_data[, "Catch_KG"], "BOT_DEPTH" = example$covariate_data[, "BOT_DEPTH"])
 data_sdmtmb$Presence = ifelse(example$sampling_data[,"Catch_KG"] > 0, 1, 0)
+
 
 mesh_use<- fit_vast$spatial_list$MeshList$anisotropic_mesh 
 mesh_sdmtmb <- sdmTMB::make_mesh(data_sdmtmb, c("Lon", "Lat"), mesh = mesh_use)
